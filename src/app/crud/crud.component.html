@@ -1,0 +1,72 @@
+<div class="page-content">
+    <div class="container">
+        <h4>CRUD WITH Firebase ...</h4>
+        <div class="row">
+            <form [formGroup]="userData" (ngSubmit)="Submit()">
+                <div class="col-md-6 mb-2">
+
+                    <input type="text" formControlName="name" class="form-control  mb-2" placeholder="Enter Name"
+                        [ngClass]="{ 'is-invalid': submitted && userData.controls['email'].errors }">
+
+                    <div *ngIf="submitted && userData.controls['name'].errors" class="text-danger">
+                        <div *ngIf="userData.controls['name'].errors['required']">
+                            Name is required
+                        </div>
+                    </div>
+
+
+                    <input type="email" formControlName="email" class="form-control  mb-2" placeholder="Enter Email"
+                        [ngClass]="{ 'is-invalid': submitted && userData.controls['password'].errors }">
+
+                    <div *ngIf="submitted && userData.controls['email'].errors" class="text-danger">
+                        <div *ngIf="userData.controls['email'].errors['required']">
+                            Email is required
+                        </div>
+                    </div>
+
+                    <input type="password" formControlName="password" class="form-control  mb-2"
+                        placeholder="Enter Password"
+                        [ngClass]="{ 'is-invalid': submitted && userData.controls['email'].errors }">
+
+                    <div *ngIf="submitted && userData.controls['password'].errors" class="text-danger">
+                        <div *ngIf="userData.controls['password'].errors['required']">
+                            Password is required
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mb-4" *ngIf="!isEdit" type="submit"> Submit
+                    <i class="bi bi-google"></i></button>
+
+                <button class="btn btn-secondary mb-4" *ngIf="isEdit" type="submit"> Update
+                    <i class="bi bi-google"></i></button>&nbsp;
+
+                <button *ngIf="isEdit" class="btn btn-success mb-4" (click)="resetForm()">
+                    <i class="bi bi-backspace-fill"></i> Back
+                </button>
+            </form>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of userList | async let i = index" class="mb-4">
+                    <td>{{i + 1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.email}}</td>
+                    <td>
+                        <button class="btn btn-outline-secondary"
+                            (click)="action('edit',item.id,item)">Edit</button>&nbsp;
+                        <button class="btn btn-outline-danger" (click)="action('delete',item.id,item)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

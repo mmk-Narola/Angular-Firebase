@@ -48,6 +48,12 @@
                   "maximumError": "4kb"
                 }
               ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {
@@ -97,8 +103,21 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "AngularFirebase:build:production",
+            "firebaseProject": "angular-project-155f1",
+            "firebaseHostingSite": "angular-project-155f1"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-project-155f1": {
+      "hosting": {
+        "AngularFirebase": [
+          "angular-project-155f1"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-project-155f1"
+  }
+}
