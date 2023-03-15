@@ -1,7 +1,7 @@
 <div class="page-content">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4     mx-auto">
+            <div class="col-lg-4 mx-auto">
                 <div class="card shadow border">
                     <div class="card-body d-flex flex-column align-items-center">
                         <h4 class="card-title mb-4 mt-2">Login/Signup</h4>
@@ -37,7 +37,7 @@
 
                             <!-- Submit button -->
                             <button type="button" class="btn btn-primary btn-block mb-2"
-                                (click)="createUserWithEmailAndPassword()">Sign in</button>
+                                (click)="signInWithEmailAndPassword()">Sign in</button>
 
                             <!-- Register buttons -->
                             <div class="text-center">
@@ -72,9 +72,16 @@
     </div>
 </div>
 
-<button class="btn btn-primary" (click)="passwordResetEmail()">ReserPassword</button>
 
+<button class="btn btn-primary" (click)="createUserWithEmailAndPassword()">createUserWithEmailAndPassword</button>&nbsp;
+<button class="btn btn-secondary" (click)="signOut()">SignOut</button>&nbsp;
+<button class="btn btn-success" (click)="passwordResetEmail()">ReserPassword</button>&nbsp;
+<button class="btn btn-warning" (click)="signInWithRedirect()">signInWithRedirect</button>&nbsp;
 
+<button type="button" class="btn btn-danger" (click)="confirmPasswordReset()">confirmPasswordReset</button>&nbsp;
+<button type=" button" class="btn btn-info">Info</button>&nbsp;
+<button type="button" class="btn btn-light">Light</button>&nbsp;
+<button type="button" class="btn btn-dark">Dark</button>&nbsp;
 
 
 <!--    <div class="text-center mb-3">

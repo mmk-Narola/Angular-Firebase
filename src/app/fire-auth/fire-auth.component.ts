@@ -10,6 +10,8 @@ import {
   signInWithRedirect,
   sendEmailVerification,
   sendPasswordResetEmail,
+  signOut,
+  getRedirectResult,
 } from '@angular/fire/auth';
 import { FormControl } from '@angular/forms';
 
@@ -72,20 +74,6 @@ export class FireAuthComponent implements OnInit {
     this.password = '';
   }
 
-  passwordResetEmail() {
-    sendPasswordResetEmail(this.auth, 'mmk@narola.email')
-      .then((res) => {
-        console.log(res);
-        // Password reset email sent!
-        // ..
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
-  }
-
   signInWithEmailAndPassword() {
     if (this.email == '') {
       alert('Please enter email');
@@ -142,31 +130,57 @@ export class FireAuthComponent implements OnInit {
       });
   }
 
+  passwordResetEmail() {
+    sendPasswordResetEmail(this.auth, 'mmk@narola.email')
+      .then((res) => {
+        console.log(res);
+        // Password reset email sent!
+        // ..
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  }
+
   signInWithRedirect() {
     const provider = new GoogleAuthProvider();
     signInWithRedirect(this.auth, provider)
-      .then((result) => {
-        console.log(result);
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        if (credential != null) {
-          const token = credential.accessToken;
-        }
-        // The signed-in user info.
-
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      })
+      .then(
+        (c) => this.getRedirect()
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // if (credential != null) {
+        //   const token = credential.accessToken;
+        // }
+      )
       .catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
         alert(errorMessage);
-        // The email of the user's account used.
         const email = error.customData.email;
-        // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+      });
+  }
+
+  getRedirect() {
+    return getRedirectResult(this.auth, new GoogleAuthProvider()).then((a) =>
+      console.log(a)
+    );
+    // return getRedirectResult().
+  }
+
+  confirmPasswordReset() {}
+
+  signOut() {
+    signOut(this.auth)
+      .then(() => {
+        console.log('signOut');
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        console.log(error);
+        // An error happened.
       });
   }
 }

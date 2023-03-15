@@ -29,11 +29,7 @@ export class CrudComponent implements OnInit {
   isEdit: boolean = false;
   updateId!: any;
   submitted = false;
-
-  route = '';
-  changeActive(route: any) {
-    this.route = route;
-  }
+  isLoading = false;
 
   constructor(private fb: FormBuilder, private firestore: Firestore) {}
 
@@ -43,7 +39,19 @@ export class CrudComponent implements OnInit {
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
-    this.getData();
+
+    this.isLoading = true;
+
+    setTimeout(() => {
+      this.isLoading = false;
+      this.getData();
+    }, 500);
+  }
+
+  getData() {
+    const collectionInstance = collection(this.firestore, 'UserDetails');
+    collectionData(collectionInstance, { idField: 'id' }).subscribe(() => {});
+    this.userList = collectionData(collectionInstance, { idField: 'id' });
   }
 
   addData() {
@@ -58,29 +66,8 @@ export class CrudComponent implements OnInit {
 
     this.userData.reset();
     this.submitted = false;
+    this.isLoading = false;
   }
-
-  getData() {
-    const collectionInstance = collection(this.firestore, 'UserDetails');
-    collectionData(collectionInstance, { idField: 'id' }).subscribe(() => {});
-    this.userList = collectionData(collectionInstance, { idField: 'id' });
-  }
-
-  // updateData(id: any) {
-  //   this.isEdit = true;
-  //   this.userList.subscribe((res) => {
-  //     res.forEach((ele: any) => {
-  //       if (ele.id === id) {
-  //         this.userData.patchValue({
-  //           name: ele.name,
-  //           email: ele.email,
-  //         });
-  //       }
-  //     });
-  //   });
-  //   this.updateId = id;
-  //   console.log(this.updateId);
-  // }
 
   editData() {
     console.log(this.userData.value);
@@ -88,23 +75,6 @@ export class CrudComponent implements OnInit {
     const docInstance = doc(this.firestore, 'UserDetails', this.updateId);
     updateDoc(docInstance, this.userData.value);
     this.resetForm();
-  }
-
-  // deleteData(id: any) {
-  //   const docInstance = doc(this.firestore, 'UserDetails', id);
-  //   deleteDoc(docInstance)
-  //     .then(() => {
-  //       console.log('Data Deleted');
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-  resetForm() {
-    this.userData.reset();
-    this.submitted = false;
-    this.isEdit = false;
   }
 
   action(type: string, index: any, data: any) {
@@ -138,4 +108,39 @@ export class CrudComponent implements OnInit {
     }
     this.isEdit ? this.editData() : this.addData();
   }
+
+  resetForm() {
+    this.userData.reset();
+    this.submitted = false;
+    this.isEdit = false;
+  }
 }
+
+/*   
+    updateData(id: any) {
+    this.isEdit = true;
+    this.userList.subscribe((res) => {
+      res.forEach((ele: any) => {
+        if (ele.id === id) {
+          this.userData.patchValue({
+            name: ele.name,
+            email: ele.email,
+          });
+        }
+      });
+    });
+    this.updateId = id;
+    console.log(this.updateId);
+  }
+
+  deleteData(id: any) {
+    const docInstance = doc(this.firestore, 'UserDetails', id);
+    deleteDoc(docInstance)
+      .then(() => {
+        console.log('Data Deleted');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+*/
