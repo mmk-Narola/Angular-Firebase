@@ -45,7 +45,12 @@ export class FileUploadComponent implements OnInit {
 
   chooseFile(event: any) {
     this.file = event.target.files[0];
-    console.log(this.file);
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => (this.imagePreview = reader.result);
+      reader.readAsDataURL(file);
+    }
   }
 
   uploadFile() {
@@ -78,9 +83,7 @@ export class FileUploadComponent implements OnInit {
           case 'storage/canceled':
             // User canceled the upload
             break;
-
           // ...
-
           case 'storage/unknown':
             // Unknown error occurred, inspect error.serverResponse
             break;
@@ -89,9 +92,13 @@ export class FileUploadComponent implements OnInit {
       () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('File available at', downloadURL);
+          this.imagePreview = downloadURL;
+          console.log('File available at', this.imagePreview);
         });
       }
     );
+
+    alert('File Upload SuccessFully');
+    ``;
   }
 }

@@ -6,21 +6,29 @@
                     <div class="card-body d-flex flex-column align-items-center">
                         <h4 class="card-title mb-4 mt-2">Firebase File Upload</h4>
                         <form>
-                            <!-- Email input -->
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="form2Example1">File Upload</label>
+
+                            <div class="form-outline mb-4 btn-upload">
+                                <!-- <label class="form-label" for="form2Example1">File Upload</label> -->
                                 <input type="file" id="form2Example1" class="form-control" name="email"
                                     (change)="chooseFile($event)" />
+                                <img src="https://www.lifewire.com/thmb/TRGYpWa4KzxUt1Fkgr3FqjOd6VQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg"
+                                    alt="" srcset="">
                             </div>
-                            <!-- Submit button -->
-                            <button type="button" class="btn btn-primary btn-block mb-4"
-                                (click)="uploadFile()">Upload</button>&nbsp;
 
-                            <button type="button" class="btn btn-dark btn-block mb-4"
-                                (click)="getFile()">getFile</button>
+                            <div class="d-flex flex-row justify-content-center">
+                                <button type="button"
+                                    class="btn btn-primary btn-block mb-4 d-flex flex-column align-items-center"
+                                    (click)="uploadFile()">
+                                    Upload</button>&nbsp;
 
-                            <img src="https://therichpost.com/wp-content/uploads/2020/07/1__p-xSamqef71sErIbqhJlA.png"
-                                class="rounded mx-auto d-block" width="200px" height="150px" alt="...">
+                                <!-- <button type="button" class="btn btn-dark mb-4" (click)="getFile()">
+                                    getFile
+                                </button> -->
+                            </div>
+
+
+                            <img [src]="imagePreview || 'http://placehold.it/180'" class="rounded mx-auto d-block"
+                                width="200px" height="150px" alt="">
                         </form>
                     </div>
                 </div>
